@@ -6,7 +6,7 @@ pref = bpy.context.user_preferences
 pref.inputs.select_mouse = 'LEFT'
 pref.view.use_auto_perspective = True
 
-f = os.getcwd() + os.path.sep + "alphaville/01.blend"
+f = os.getcwd() + os.path.sep + "01.blend"
 print(f)
 
 with bpy.data.libraries.load(f) as (src,dst):
