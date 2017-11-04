@@ -1,7 +1,6 @@
-cd ..
+set PATH=%PATH%;%USERPROFILE%\Desktop\blender;%USERPROFILE%\documents\blender;
 
 
-
-blender alphaville/01.blend --python alphaville/start.py
+blender 01.blend --python alphaville/start.py
 
 
