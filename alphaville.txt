@@ -1,0 +1,7 @@
+{
+	"path":"/01/obj.blend",
+	"max_size":500,
+	"use_offset":1,
+	"cell_dim":20,
+	"grid_dim":2
+}
