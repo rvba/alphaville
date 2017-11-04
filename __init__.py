@@ -22,7 +22,7 @@ bl_info = {
     "version": (0,1),
     "blender": (2, 7, 9),
     "location": "Scene > AlphaVille",
-    "description": "Assemble an orthogonal town, piece after piece",
+    "description": "a dumb town generator",
     "wiki_url": "http://github.com/rvba/alphaville",
     "tracker_url": "none",
     "category": "Scene"}
