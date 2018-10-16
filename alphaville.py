@@ -135,7 +135,7 @@ def load_blends(operator,
 						dst.objects = [name for name in src.objects]
 
 					for ob in dst.objects:
-						global current_cell
+						current_cell
 						if ob is not None:
 							x = (cell_dim + offset_dim) * current_cell
 							y = (cell_dim + offset_dim) * current_column
