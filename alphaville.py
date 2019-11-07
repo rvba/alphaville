@@ -143,7 +143,7 @@ def load_blends(operator,
 								ob.location.x += x  
 								ob.location.y += y  
 
-							bpy.context.scene.objects.link(ob)
+							bpy.context.scene.collection.objects.link(ob)
 							ob.show_wire = True
 
 							if use_offset and offset_dim > 0:
