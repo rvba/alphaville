@@ -228,7 +228,7 @@ class RVBA_PT_Alphaville(bpy.types.Panel):
 		return context.scene
 
 	def load_pref(item):
-		path = bpy.utils.resource_path('LOCAL') + "alphaville.txt"
+		path = bpy.utils.resource_path('LOCAL') + "scripts/addons_contrib/alphaville/alphaville.txt"
 		if os.path.isfile(path):
 			with open(path) as data_file:
 				data = json.load(data_file)
