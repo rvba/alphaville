@@ -36,7 +36,6 @@ from bpy.props import (
 from bpy_extras.io_utils import (
 		ImportHelper,
 		ExportHelper,
-		orientation_helper_factory,
 		axis_conversion,
 		)
 
@@ -135,7 +134,7 @@ def load_blends(operator,
 						dst.objects = [name for name in src.objects]
 
 					for ob in dst.objects:
-						global current_cell
+						current_cell
 						if ob is not None:
 							x = (cell_dim + offset_dim) * current_cell
 							y = (cell_dim + offset_dim) * current_column
@@ -190,7 +189,7 @@ def load_blends(operator,
 			else:
 				print("Not a file:"+f)
 
-class Load_obj(bpy.types.Operator,ImportHelper):
+class IMPORT_OT_Alphaville(bpy.types.Operator,ImportHelper):
 	"""Load obj"""
 	bl_idname = "import_scene.load_objs"
 	bl_label = 'Load Objs'
@@ -217,7 +216,7 @@ class Load_obj(bpy.types.Operator,ImportHelper):
 
 		return {'FINISHED'}
 
-class Alphaville(bpy.types.Panel):
+class RVBA_PT_Alphaville(bpy.types.Panel):
 
 	bl_space_type='PROPERTIES'
 	bl_region_type='WINDOW'
@@ -260,7 +259,7 @@ class Alphaville(bpy.types.Panel):
 		layout=self.layout
 		col=layout.column(align=True)
 		col.prop(context.scene,"arx_alpha_collect_path",text="")
-		col.operator(Load_obj.bl_idname,text="Import")
+		col.operator(IMPORT_OT_Alphaville.bl_idname,text="Import")
 		col.prop(scene,"arx_alpha_file_max_size",text="max size (ko)")
 
 
@@ -275,5 +274,11 @@ class Alphaville(bpy.types.Panel):
 def import_alphaville(self, context):
 	self.layout.operator(_IMPORT_Alphaville.bl_idname, text="Alphaville" , icon='FILE_IMAGE')
 	return {'FINISHED'}
+ 
+def register():
+	bpy.utils.register_class(RVBA_PT_Alphaville)
+	#bpy.utils.register_class(Build_Alphaville)
+	bpy.utils.register_class(IMPORT_OT_Alphaville)
+	print("registered!")
 
 # vim: set noet sts=8 sw=8 :

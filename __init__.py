@@ -20,7 +20,7 @@ bl_info = {
     "name": "AlphaVille",
     "author": "Milovann Yanatchkov",
     "version": (0,1),
-    "blender": (2, 7, 9),
+    "blender": (2, 80, 0),
     "location": "Scene > AlphaVille",
     "description": "a dumb town generator",
     "wiki_url": "http://github.com/rvba/alphaville",
@@ -40,7 +40,8 @@ def unregister():
 	bpy.utils.unregister_module(__name__)
 
 def register():
-	bpy.utils.register_module(__name__)
+	alphaville.register()
+	#bpy.utils.register_module(__name__)
 
 if __name__ == "__main__":
 	register()
