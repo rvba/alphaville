@@ -133,58 +133,60 @@ def load_blends(operator,
 					with bpy.data.libraries.load(f) as (src,dst):
 						dst.objects = [name for name in src.objects]
 
+					# Add objects
 					for ob in dst.objects:
-						current_cell
 						if ob is not None:
-							x = (cell_dim + offset_dim) * current_cell
-							y = (cell_dim + offset_dim) * current_column
-							z = 0
-							if use_offset:
-								ob.location.x += x  
-								ob.location.y += y  
-
 							bpy.context.scene.collection.objects.link(ob)
+							ob.name=d
 							ob.show_wire = True
 
-							if use_offset and offset_dim > 0:
-								if current_column == 0:
-									if current_cell < grid_dim - 1:
-										ox = x  + (cell_dim / 2)
-										oy = y - (cell_dim / 2 ) 
-										oz = 0
-										w = offset_dim
-										h = cell_dim
-										add_plane(context,ox,oy,oz,w,h)
-								else:
-									ox = x - (cell_dim / 2)
-									oy = y - ((cell_dim / 2 ) + offset_dim)
-									oz = 0
-									w = cell_dim
-									h = offset_dim
-									add_plane(context,ox,oy,oz,w,h)
+					# Offset
+					x = (cell_dim + offset_dim) * current_cell
+					y = (cell_dim + offset_dim) * current_column
+					z = 0
+					if use_offset:
+						ob.location.x += x  
+						ob.location.y += y  
 
-									if current_cell < grid_dim - 1:
-										ox = x  + (cell_dim / 2)
-										oy = y - ((cell_dim / 2 ) + offset_dim)
-										oz = 0
-										w = offset_dim
-										h = offset_dim
-										add_plane(context,ox,oy,oz,w,h)
+					if use_offset and offset_dim > 0:
+						if current_column == 0:
+							if current_cell < grid_dim - 1:
+								ox = x  + (cell_dim / 2)
+								oy = y - (cell_dim / 2 ) 
+								oz = 0
+								w = offset_dim
+								h = cell_dim
+								add_plane(context,ox,oy,oz,w,h)
+						else:
+							ox = x - (cell_dim / 2)
+							oy = y - ((cell_dim / 2 ) + offset_dim)
+							oz = 0
+							w = cell_dim
+							h = offset_dim
+							add_plane(context,ox,oy,oz,w,h)
 
-										ox = x  + (cell_dim / 2)
-										oy = y - (cell_dim / 2 ) 
-										oz = 0
-										w = offset_dim
-										h = cell_dim
-										add_plane(context,ox,oy,oz,w,h)
+							if current_cell < grid_dim - 1:
+								ox = x  + (cell_dim / 2)
+								oy = y - ((cell_dim / 2 ) + offset_dim)
+								oz = 0
+								w = offset_dim
+								h = offset_dim
+								add_plane(context,ox,oy,oz,w,h)
+
+								ox = x  + (cell_dim / 2)
+								oy = y - (cell_dim / 2 ) 
+								oz = 0
+								w = offset_dim
+								h = cell_dim
+								add_plane(context,ox,oy,oz,w,h)
 
 
 
-							if current_cell >= grid_dim-1:
-								current_cell = 0
-								current_column = current_column + 1
-							else:
-								current_cell += 1
+					if current_cell >= grid_dim-1:
+						current_cell = 0
+						current_column = current_column + 1
+					else:
+						current_cell += 1
 
 			else:
 				print("Not a file:"+f)
