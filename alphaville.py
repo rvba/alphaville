@@ -96,7 +96,7 @@ def add_plane(context,ox,oy,oz,w,h):
 	mesh.update()
 
 	ob = bpy.data.objects.new("Plane",mesh)
-	bpy.context.scene.objects.link(ob)
+	bpy.context.scene.collection.objects.link(ob)
 	ob.location.x = ox
 	ob.location.y = oy
 	ob.location.z = oz
@@ -116,9 +116,12 @@ def load_blends(operator,
 	name="obj.obj"
 	current_column = 0
 	current_cell = 0
+	print("############################################")
 	for d in sorted(dirs):
 		_dir = path + d
+		print(d)
 		if os.path.isdir(_dir):
+			print("##### ok")
 			f = path + d + sub_path
 			if os.path.isfile(f):
 				size = os.path.getsize(f)
@@ -133,24 +136,27 @@ def load_blends(operator,
 					with bpy.data.libraries.load(f) as (src,dst):
 						dst.objects = [name for name in src.objects]
 
-					# Add objects
-					for ob in dst.objects:
-						if ob is not None:
-							bpy.context.scene.collection.objects.link(ob)
-							ob.name=d
-							ob.show_wire = True
-
 					# Offset
 					x = (cell_dim + offset_dim) * current_cell
 					y = (cell_dim + offset_dim) * current_column
 					z = 0
-					if use_offset:
-						ob.location.x += x  
-						ob.location.y += y  
+						
+					# Add objects
+					for ob in dst.objects:
+						if ob is not None and ob.type == "MESH":
+							bpy.context.scene.collection.objects.link(ob)
+							ob.name=d
+							ob.show_wire = True
+							if use_offset:
+								ob.location.x = x  
+								ob.location.y = y 
+								print(x,y)
 
 					if use_offset and offset_dim > 0:
 						if current_column == 0:
+							print("1) col 0")
 							if current_cell < grid_dim - 1:
+								print("2) < grid")
 								ox = x  + (cell_dim / 2)
 								oy = y - (cell_dim / 2 ) 
 								oz = 0
@@ -158,6 +164,7 @@ def load_blends(operator,
 								h = cell_dim
 								add_plane(context,ox,oy,oz,w,h)
 						else:
+							print("3) else")
 							ox = x - (cell_dim / 2)
 							oy = y - ((cell_dim / 2 ) + offset_dim)
 							oz = 0
@@ -166,6 +173,7 @@ def load_blends(operator,
 							add_plane(context,ox,oy,oz,w,h)
 
 							if current_cell < grid_dim - 1:
+								print("4) ....")
 								ox = x  + (cell_dim / 2)
 								oy = y - ((cell_dim / 2 ) + offset_dim)
 								oz = 0
@@ -183,9 +191,11 @@ def load_blends(operator,
 
 
 					if current_cell >= grid_dim-1:
+						print("5) reset, col++")
 						current_cell = 0
 						current_column = current_column + 1
 					else:
+						print("6) cell++")
 						current_cell += 1
 
 			else:
