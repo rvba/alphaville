@@ -52,6 +52,10 @@ def load_objs(operator,
 	path = bpy.path.abspath(filepath)
 	dirs = os.listdir(path)
 	name="obj.obj"
+
+	for obj in bpy.data.objects:
+		bpy.data.objects.remove(obj)
+
 	for d in dirs:
 		_dir = path + d
 		if os.path.isdir(_dir):
@@ -63,6 +67,11 @@ def load_objs(operator,
 				if(size>max_size):
 					print("[WARNING]",f,"too large")
 				else:
+					name = d
+					col = bpy.data.collections.new(name)
+					bpy.context.scene.collection.children.link(col)
+					layer = bpy.context.view_layer.layer_collection.children[name]
+					bpy.context.view_layer.active_layer_collection = layer
 					bpy.ops.import_scene.obj(filepath=f)
 			else:
 				print("Not a file:"+f)
